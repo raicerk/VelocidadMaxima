@@ -15,10 +15,14 @@ export class DbProvider {
 
   items: Observable<any[]>;
 
-  constructor(af: AngularFireDatabase) {
-    this.items = af.list('/push').valueChanges();
-    af.list("/datos")
-    af.list("").push("");
+  constructor(public af: AngularFireDatabase) {
+    //this.items = af.list('/push').valueChanges();
+    //af.list("/datos")
+  }
+
+  SaveFirebase(Datos: any){
+    this.af.list("/VelocidadGPS").push(Datos);
+    console.log("Guardado exitosamente");
   }
 
 }
