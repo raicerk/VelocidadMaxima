@@ -11,13 +11,25 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import {
-  BackgroundGeolocation,
-  BackgroundGeolocationConfig,
-  BackgroundGeolocationResponse
-} from '@ionic-native/background-geolocation';
 import { GpsProvider } from '../providers/gps/gps';
+import { DbProvider } from '../providers/db/db';
+
+import {BackgroundGeolocation,BackgroundGeolocationConfig,BackgroundGeolocationResponse} from '@ionic-native/background-geolocation';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+
+
+
+export const firebaseConfig = {
+  apiKey: 'AIzaSyDi1hsVHsuOqHZp4KtcjQx95H9XgeSke2c',
+  authDomain: 'velocidad-730a2.firebaseapp.com',
+  databaseURL: 'https://velocidad-730a2.firebaseio.com',
+  storageBucket: 'velocidad-730a2.appspot.com',
+  messagingSenderId: '394694744180'
+  };
 
 @NgModule({
   declarations: [
@@ -29,7 +41,10 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -44,8 +59,10 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
     SplashScreen,
     BackgroundGeolocation,
     Geolocation,
+    AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GpsProvider
+    GpsProvider,
+    DbProvider
   ]
 })
 export class AppModule {}
