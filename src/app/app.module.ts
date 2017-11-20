@@ -19,8 +19,8 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-
-
+import { DeviceProvider } from '../providers/device/device';
+import { Device } from '@ionic-native/device';
 
 
 export const firebaseConfig = {
@@ -62,7 +62,9 @@ export const firebaseConfig = {
     AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GpsProvider,
-    DbProvider
+    DbProvider,
+    DeviceProvider,
+    Device
   ]
 })
 export class AppModule {}

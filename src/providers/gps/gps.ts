@@ -8,6 +8,7 @@ import {
   BackgroundGeolocationResponse
 } from '@ionic-native/background-geolocation';
 import { DbProvider } from '../db/db'
+import { DeviceProvider } from '../device/device'
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class GpsProvider {
   public speed: number = 0;
 
 
-  constructor(private backgroundGeolocation: BackgroundGeolocation, public zone: NgZone, public geolocation: Geolocation, public fb: DbProvider) {
+  constructor(private backgroundGeolocation: BackgroundGeolocation, public zone: NgZone, public geolocation: Geolocation, public fb: DbProvider, public dv: DeviceProvider) {
     console.log('Hello GpsProvider Provider');
   }
 
@@ -30,7 +31,7 @@ export class GpsProvider {
       stationaryRadius: 1,
       distanceFilter: 1,
       debug: true,
-      interval: 1000
+      interval: 500
     };
 
 
@@ -39,10 +40,11 @@ export class GpsProvider {
 
       this.zone.run(() => {
         this.fb.SaveFirebase({
-          lat : location.latitude,
-          lng :  location.longitude,
-          speed : location.speed,
-          device :  '1' 
+          lat: location.latitude,
+          lng: location.longitude,
+          speed: location.speed,
+          device: this.dv.uuid(),
+          date: location.timestamp
         });
         this.lat = location.latitude;
         this.lng = location.longitude;
@@ -60,8 +62,9 @@ export class GpsProvider {
 
     // Foreground Tracking
     let options = {
-      frequency: 1000,
-      enableHighAccuracy: true
+      frequency: 500,
+      enableHighAccuracy: true,
+      debug: true
     };
 
     this.watch = this.geolocation.watchPosition(options).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
@@ -69,10 +72,11 @@ export class GpsProvider {
       // Run update inside of Angular's zone
       this.zone.run(() => {
         this.fb.SaveFirebase({
-          lat : position.coords.latitude,
-          lng :  position.coords.longitude,
-          speed : position.coords.speed,
-          device :  '1' 
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          speed: position.coords.speed,
+          device: this.dv.uuid(),
+          date: position.timestamp
         });
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
