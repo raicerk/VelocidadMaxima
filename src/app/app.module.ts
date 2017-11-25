@@ -1,72 +1,64 @@
-import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
+import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
+import { ListPage } from '../pages/list/list';
+
+import { GpsProvider } from '../providers/gps/gps';
+import { DeviceProvider } from '../providers/device/device';
+import { FirebaseProvider } from '../providers/firebase/firebase';
+import { TransportProvider } from '../providers/transport/transport';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { GpsProvider } from '../providers/gps/gps';
-import { DbProvider } from '../providers/db/db';
-
-import {BackgroundGeolocation,BackgroundGeolocationConfig,BackgroundGeolocationResponse} from '@ionic-native/background-geolocation';
-import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { DeviceProvider } from '../providers/device/device';
+import { Geolocation } from '@ionic-native/geolocation';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Device } from '@ionic-native/device';
-import { TransportesProvider } from '../providers/transportes/transportes';
-
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 
 export const firebaseConfig = {
-  apiKey: 'AIzaSyDi1hsVHsuOqHZp4KtcjQx95H9XgeSke2c',
-  authDomain: 'velocidad-730a2.firebaseapp.com',
-  databaseURL: 'https://velocidad-730a2.firebaseio.com',
-  storageBucket: 'velocidad-730a2.appspot.com',
-  messagingSenderId: '394694744180'
-  };
+	apiKey: 'AIzaSyDi1hsVHsuOqHZp4KtcjQx95H9XgeSke2c',
+	authDomain: 'velocidad-730a2.firebaseapp.com',
+	databaseURL: 'https://velocidad-730a2.firebaseio.com',
+	storageBucket: 'velocidad-730a2.appspot.com',
+	messagingSenderId: '394694744180'
+};
 
 @NgModule({
-  declarations: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    BackgroundGeolocation,
-    Geolocation,
-    AngularFireDatabase,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GpsProvider,
-    DbProvider,
-    DeviceProvider,
-    Device,
-    TransportesProvider
-  ]
+	declarations: [
+		MyApp,
+		HomePage,
+		ListPage
+	],
+	imports: [
+		BrowserModule,
+		IonicModule.forRoot(MyApp),
+		AngularFireModule.initializeApp(firebaseConfig),
+		AngularFireDatabaseModule,
+		AngularFireAuthModule
+	],
+	bootstrap: [IonicApp],
+	entryComponents: [
+		MyApp,
+		HomePage,
+		ListPage
+	],
+	providers: [
+		StatusBar,
+		SplashScreen,
+		{ provide: ErrorHandler, useClass: IonicErrorHandler },
+		GpsProvider,
+		DeviceProvider,
+		FirebaseProvider,
+		TransportProvider,
+		Geolocation,
+		BackgroundGeolocation,
+		Device,
+		AngularFireDatabase
+	]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,14 +1,8 @@
 import { Injectable, NgZone } from '@angular/core';
-import 'rxjs/add/operator/map';
+import { FirebaseProvider } from '../firebase/firebase';
+import { DeviceProvider } from '../device/device';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-import 'rxjs/add/operator/filter';
-import {
-	BackgroundGeolocation,
-	BackgroundGeolocationConfig,
-	BackgroundGeolocationResponse
-} from '@ionic-native/background-geolocation';
-import { DbProvider } from '../db/db'
-import { DeviceProvider } from '../device/device'
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 
 @Injectable()
 export class GpsProvider {
@@ -18,13 +12,57 @@ export class GpsProvider {
 	public lng: number = 0;
 	public speed: number = 0;
 	public date: any;
-	private correccion: number = 3.7;
+	private converter: number = 3.7;
+	public typeTransport: number;
+	public idTransport: string;
 
-	constructor(private backgroundGeolocation: BackgroundGeolocation, public zone: NgZone, public geolocation: Geolocation, public fb: DbProvider, public dv: DeviceProvider) {
-		console.log('Hello GpsProvider Provider');
+	constructor(private geolocation: Geolocation, public zone: NgZone, private firebase: FirebaseProvider, private device: DeviceProvider, private backgroundGeolocation: BackgroundGeolocation) {
 	}
 
-	startTracking(tipoTransporte: number, patenteTransporte: string) {
+	/**
+	 * start Geolocation and save data in firebase
+	 */
+	start(){
+		this.geoLocationStart();
+		this.backgroundLocationStart();
+	}
+
+	/**
+	 * Start geolocation
+	 */
+	geoLocationStart() {
+
+		let options = {
+			timeout: 500
+		};
+
+		this.watch = this.geolocation.watchPosition(options).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
+
+			this.zone.run(() => {
+
+				this.firebase.SaveFirebase('/Velocidad', {
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude,
+					speed: position.coords.speed * this.converter,
+					device: this.device.uuid,
+					date: position.timestamp,
+					typeTransport: this.typeTransport,
+					idTransport: this.idTransport,
+					country: 'Chile'
+				});
+
+				this.lat = position.coords.latitude;
+				this.lng = position.coords.longitude;
+				this.speed = position.coords.speed * this.converter;
+
+			});
+		});
+	}
+
+	/**
+	 * Start background geolocation
+	 */
+	backgroundLocationStart(){
 
 		let config = {
 			desiredAccuracy: 0,
@@ -37,58 +75,33 @@ export class GpsProvider {
 		this.backgroundGeolocation.configure(config).subscribe((location) => {
 
 			this.zone.run(() => {
-				this.fb.SaveFirebase({
+				this.firebase.SaveFirebase('/Velocidad',{
 					lat: location.latitude,
 					lng: location.longitude,
-					speed: (location.speed * this.correccion),
-					device: this.dv.uuid(),
-					date:location.timestamp,
-					typeTransport: tipoTransporte,
-					idTransport: patenteTransporte,
+					speed: (location.speed * this.converter),
+					device: this.device.uuid,
+					date: location.timestamp,
+					typeTransport: this.typeTransport,
+					idTransport: this.idTransport,
 					country: 'Chile'
 				});
 				this.lat = location.latitude;
 				this.lng = location.longitude;
-				this.speed = (location.speed * this.correccion);
+				this.speed = location.speed * this.converter;
 			});
 
 		}, (err) => {
 			console.log(err);
 		});
 
-		// Turn ON the background-geolocation system.
 		this.backgroundGeolocation.start();
 
-		// Foreground Tracking
-		let options = {
-			frequency: 500,
-			enableHighAccuracy: true,
-			debug: false
-		};
-
-		this.watch = this.geolocation.watchPosition(options).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
-
-			// Run update inside of Angular's zone
-			this.zone.run(() => {
-				this.fb.SaveFirebase({
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-					speed: (position.coords.speed * this.correccion),
-					device: this.dv.uuid(),
-					date: position.timestamp,
-					typeTransport: tipoTransporte,
-					idTransport: patenteTransporte,
-					country: 'Chile'
-				});
-				this.lat = position.coords.latitude;
-				this.lng = position.coords.longitude;
-				this.speed = (position.coords.speed * this.correccion);
-			});
-
-		});
 	}
 
-	stopTracking() {
+	/**
+	 * Stop geolocation
+	 */
+	stop() {
 		console.log('stopTracking');
 		this.lat = 0;
 		this.lng = 0;

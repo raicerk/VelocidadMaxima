@@ -1,11 +1,13 @@
 <ion-header>
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Home</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
   <ion-item>
     <ion-label fixed>Velocidad</ion-label>
     <ion-input type="text" readonly=true value="{{ gps.speed | number: '1.1-2' }}"></ion-input>
@@ -24,7 +26,7 @@
   <ion-item>
     <ion-label>Transporte</ion-label>
     <ion-select [(ngModel)]="tipoTransporte">
-      <ion-option *ngFor="let item of transporte.Listatransportes" value="{{item.id}}">{{item.tipo}}</ion-option>
+      <ion-option *ngFor="let item of transport.listTransports" value="{{item.id}}">{{item.type}}</ion-option>
     </ion-select>
   </ion-item>
 
@@ -36,5 +38,4 @@
   <button ion-button (tap)="iniciar()">Iniciar</button>
 
   <button ion-button (tap)="detener()">Detener</button>
-
 </ion-content>
