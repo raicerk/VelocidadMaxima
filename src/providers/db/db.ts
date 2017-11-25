@@ -21,7 +21,7 @@ export class DbProvider {
   }
 
   SaveFirebase(Datos: any){
-    this.af.list("/VelocidadGPS").push(Datos);
+    this.af.list("/VelocidadMaxima").push(Datos);
     console.log("Guardado exitosamente");
   }
 

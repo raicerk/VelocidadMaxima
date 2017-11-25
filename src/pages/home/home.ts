@@ -10,14 +10,14 @@ import { TransportesProvider } from '../../providers/transportes/transportes';
 })
 export class HomePage {
 
-  private listaTipos: any;
+  tipoTransporte: number;
+  patenteTransporte: string;
 
   constructor(public navCtrl: NavController, public gps: GpsProvider, public transporte: TransportesProvider) {
-    this.listaTipos = transporte.Listatransportes;
   }
 
   iniciar(){
-    this.gps.startTracking();
+    this.gps.startTracking(parseInt(this.tipoTransporte.toString()), this.patenteTransporte);
     console.log("Iniciar");
   }
 

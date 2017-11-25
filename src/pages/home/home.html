@@ -6,14 +6,32 @@
 
 <ion-content padding>
 
-  <h3>Speed: {{ gps.speed | number: '1.1-2' }}</h3>
+  <ion-item>
+    <ion-label fixed>Velocidad</ion-label>
+    <ion-input type="text" readonly=true value="{{ gps.speed | number: '1.1-2' }}"></ion-input>
+  </ion-item>
 
-  <h3>Current Latitude: {{gps.lat}}</h3>
-  <h3>Current Longitude: {{gps.lng}}</h3>
+  <ion-item>
+    <ion-label fixed>Latitud</ion-label>
+    <ion-input type="text" readonly=true value="{{gps.lat}}"></ion-input>
+  </ion-item>
 
-  <select>
-    
-  </select>
+  <ion-item>
+    <ion-label fixed>Longitud</ion-label>
+    <ion-input type="text" readonly=true value="{{gps.lng}}"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Transporte</ion-label>
+    <ion-select [(ngModel)]="tipoTransporte">
+      <ion-option *ngFor="let item of transporte.Listatransportes" value="{{item.id}}">{{item.tipo}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label fixed>Patente</ion-label>
+    <ion-input type="text" value="" [(ngModel)]="patenteTransporte" (ngModelChange)="patenteTransporte = $event.toLocaleUpperCase()"></ion-input>
+  </ion-item>
 
   <button ion-button (tap)="iniciar()">Iniciar</button>
 

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -13,8 +12,30 @@ export class TransportesProvider {
 
   public Listatransportes: any;
 
-  constructor(public http: Http) {
+  constructor() {
     console.log('Hello TransportesProvider Provider');
-    this.Listatransportes = ["Bus interurbano","Micro interurbana", "Colectivo", "Taxi", "Transantiago", "Transantiago oruga", "Metro"]
+    this.Listatransportes = [
+      {
+        id: 1,
+        tipo:"Bus interurbano"
+      },{
+        id: 2,
+        tipo: "Micro interurbana"
+      },{
+        id: 3,
+        tipo : "Colectivo"
+      },{
+        id: 4,
+        tipo: "Taxi"
+      },{
+        id: 5,
+        tipo: "Transantiago"
+      },{
+        id: 6,
+        tipo: "Transantiago oruga"
+      },{
+        id: 7,
+        tipo:"Metro" 
+      }]
   }
 }

@@ -17,19 +17,20 @@ export class GpsProvider {
 	public lat: number = 0;
 	public lng: number = 0;
 	public speed: number = 0;
+	public date: any;
 	private correccion: number = 3.7;
 
 	constructor(private backgroundGeolocation: BackgroundGeolocation, public zone: NgZone, public geolocation: Geolocation, public fb: DbProvider, public dv: DeviceProvider) {
 		console.log('Hello GpsProvider Provider');
 	}
 
-	startTracking() {
+	startTracking(tipoTransporte: number, patenteTransporte: string) {
 
 		let config = {
 			desiredAccuracy: 0,
 			stationaryRadius: 1,
 			distanceFilter: 1,
-			debug: true,
+			debug: false,
 			interval: 500
 		};
 
@@ -41,7 +42,10 @@ export class GpsProvider {
 					lng: location.longitude,
 					speed: (location.speed * this.correccion),
 					device: this.dv.uuid(),
-					date: location.timestamp
+					date:location.timestamp,
+					typeTransport: tipoTransporte,
+					idTransport: patenteTransporte,
+					country: 'Chile'
 				});
 				this.lat = location.latitude;
 				this.lng = location.longitude;
@@ -59,7 +63,7 @@ export class GpsProvider {
 		let options = {
 			frequency: 500,
 			enableHighAccuracy: true,
-			debug: true
+			debug: false
 		};
 
 		this.watch = this.geolocation.watchPosition(options).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
@@ -71,7 +75,10 @@ export class GpsProvider {
 					lng: position.coords.longitude,
 					speed: (position.coords.speed * this.correccion),
 					device: this.dv.uuid(),
-					date: position.timestamp
+					date: position.timestamp,
+					typeTransport: tipoTransporte,
+					idTransport: patenteTransporte,
+					country: 'Chile'
 				});
 				this.lat = position.coords.latitude;
 				this.lng = position.coords.longitude;
