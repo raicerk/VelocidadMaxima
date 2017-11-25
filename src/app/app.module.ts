@@ -21,6 +21,7 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { DeviceProvider } from '../providers/device/device';
 import { Device } from '@ionic-native/device';
+import { TransportesProvider } from '../providers/transportes/transportes';
 
 
 export const firebaseConfig = {
@@ -64,7 +65,8 @@ export const firebaseConfig = {
     GpsProvider,
     DbProvider,
     DeviceProvider,
-    Device
+    Device,
+    TransportesProvider
   ]
 })
 export class AppModule {}

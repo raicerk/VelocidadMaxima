@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { GpsProvider } from '../../providers/gps/gps';
+import { TransportesProvider } from '../../providers/transportes/transportes';
 
 @Component({
   selector: 'page-home',
@@ -9,7 +10,10 @@ import { GpsProvider } from '../../providers/gps/gps';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public gps: GpsProvider) {
+  private listaTipos: any;
+
+  constructor(public navCtrl: NavController, public gps: GpsProvider, public transporte: TransportesProvider) {
+    this.listaTipos = transporte.Listatransportes;
   }
 
   iniciar(){

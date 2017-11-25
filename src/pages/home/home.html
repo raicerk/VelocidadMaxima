@@ -6,10 +6,14 @@
 
 <ion-content padding>
 
-  <h3>Speed: {{ (gps.speed * 3.7) | number: '1.1-2' }}</h3>
+  <h3>Speed: {{ gps.speed | number: '1.1-2' }}</h3>
 
   <h3>Current Latitude: {{gps.lat}}</h3>
   <h3>Current Longitude: {{gps.lng}}</h3>
+
+  <select>
+    
+  </select>
 
   <button ion-button (tap)="iniciar()">Iniciar</button>
 
