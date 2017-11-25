@@ -94,4 +94,8 @@
         <variable name="ACCOUNT_TYPE" value="$PACKAGE_NAME.account" />
         <variable name="CONTENT_AUTHORITY" value="$PACKAGE_NAME" />
     </plugin>
+    <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
+        <variable name="APP_ID" value="192244928001815" />
+        <variable name="APP_NAME" value="VelocidadMaxima" />
+    </plugin>
 </widget>

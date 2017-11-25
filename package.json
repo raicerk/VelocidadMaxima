@@ -23,6 +23,7 @@
     "@ionic-native/background-geolocation": "^4.4.2",
     "@ionic-native/core": "4.3.2",
     "@ionic-native/device": "^4.4.2",
+    "@ionic-native/facebook": "^4.4.2",
     "@ionic-native/geolocation": "^4.4.2",
     "@ionic-native/splash-screen": "4.3.2",
     "@ionic-native/status-bar": "4.3.2",
@@ -30,6 +31,7 @@
     "angularfire2": "^5.0.0-rc.4",
     "cordova-android": "6.3.0",
     "cordova-plugin-device": "^1.1.4",
+    "cordova-plugin-facebook4": "^1.9.1",
     "cordova-plugin-geolocation": "^3.0.0",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-mauron85-background-geolocation": "^2.3.3",
@@ -66,6 +68,10 @@
         "ACCOUNT_LABEL": "@string/app_name",
         "ACCOUNT_TYPE": "$PACKAGE_NAME.account",
         "CONTENT_AUTHORITY": "$PACKAGE_NAME"
+      },
+      "cordova-plugin-facebook4": {
+        "APP_ID": "192244928001815",
+        "APP_NAME": "VelocidadMaxima"
       }
     },
     "platforms": [

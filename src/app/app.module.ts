@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
+import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
@@ -19,6 +20,7 @@ import { Device } from '@ionic-native/device';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { Facebook } from '@ionic-native/facebook'
 
 export const firebaseConfig = {
 	apiKey: 'AIzaSyDi1hsVHsuOqHZp4KtcjQx95H9XgeSke2c',
@@ -31,6 +33,7 @@ export const firebaseConfig = {
 @NgModule({
 	declarations: [
 		MyApp,
+		LoginPage,
 		HomePage,
 		ListPage
 	],
@@ -44,6 +47,7 @@ export const firebaseConfig = {
 	bootstrap: [IonicApp],
 	entryComponents: [
 		MyApp,
+		LoginPage,
 		HomePage,
 		ListPage
 	],
@@ -58,7 +62,8 @@ export const firebaseConfig = {
 		Geolocation,
 		BackgroundGeolocation,
 		Device,
-		AngularFireDatabase
+		AngularFireDatabase,
+		Facebook
 	]
 })
 export class AppModule { }
