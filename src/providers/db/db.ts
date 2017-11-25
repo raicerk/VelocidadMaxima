@@ -19,7 +19,11 @@ export class DbProvider {
     //this.items = af.list('/push').valueChanges();
     //af.list("/datos")
   }
-
+  /**
+   * Almacena la informacion en el sistema
+   * @param  {any}    Datos [description]
+   * @return {[type]}       [description]
+   */
   SaveFirebase(Datos: any){
     this.af.list("/VelocidadMaxima").push(Datos);
     console.log("Guardado exitosamente");
