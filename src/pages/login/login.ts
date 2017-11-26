@@ -4,6 +4,7 @@ import { Facebook } from '@ionic-native/facebook';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { HomePage } from '../home/home';
+import { Storage } from '@ionic/storage';
 
 @Component({
 	selector: 'page-login',
@@ -13,40 +14,41 @@ export class LoginPage {
 
 	userProfile: any = null;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, private facebook: Facebook, public fba: AngularFireAuth, public menu: MenuController) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, private facebook: Facebook, public fba: AngularFireAuth, public menu: MenuController, private storage: Storage) {
 	}
 
-	ionViewDidEnter() {
-		//to disable menu, or
-		this.menu.enable(false);
+  ionViewDidEnter() {
+    this.storage.get('userProfile').then((val) => {
+      if (val!=null) {
+        console.log(val);
+        this.navCtrl.setRoot(HomePage);
+      }
+    });
+    this.menu.enable(false);
 	}
 
 	ionViewWillLeave() {
-		// to enable menu.
 		this.menu.enable(true);
 	}
 
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad LoginPage');
-	}
+	facebookLogin(){
 
-	facebookLogin() {
 		this.facebook.login(['email']).then((response) => {
 
-			const facebookCredential = firebase.auth.FacebookAuthProvider
-				.credential(response.authResponse.accessToken);
+			const facebookCredential = firebase.auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
 
 			firebase.auth().signInWithCredential(facebookCredential)
-				.then((success) => {
-					console.log("Firebase success: " + JSON.stringify(success));
-					this.userProfile = success;
+				.then((data) => {
+					this.userProfile = data;
+          this.storage.set('userProfile', data);
           this.navCtrl.setRoot(HomePage);
 				})
 				.catch((error) => {
 					console.log("Firebase failure: " + JSON.stringify(error));
 				});
-
-		}).catch((error) => { console.log(error) });
+		}).catch((error) => {
+      console.log(error)
+    });
 	}
 
 }

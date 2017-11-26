@@ -98,4 +98,5 @@
         <variable name="APP_ID" value="192244928001815" />
         <variable name="APP_NAME" value="VelocidadMaxima" />
     </plugin>
+    <plugin name="cordova-sqlite-storage" spec="^2.1.2" />
 </widget>

@@ -1,9 +1,17 @@
+
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+    <ion-title>Buttons In Components</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+    <button ion-button icon-only (click)="salir()">
+      <ion-icon name='exit'></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
