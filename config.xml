@@ -84,7 +84,6 @@
     <plugin name="cordova-plugin-geolocation" spec="^3.0.0">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="Tu" />
     </plugin>
-    <engine name="android" spec="~6.3.0" />
     <plugin name="cordova-plugin-mauron85-background-geolocation" spec="^2.3.3">
         <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="+" />
         <variable name="ICON" value="@mipmap/icon" />
@@ -99,4 +98,5 @@
         <variable name="APP_NAME" value="VelocidadMaxima" />
     </plugin>
     <plugin name="cordova-sqlite-storage" spec="^2.1.2" />
+    <engine name="android" spec="~6.3.0" />
 </widget>
